@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% block title %}watch - {{course.title}}{% endblock %}
+{% load static %}
+{% load course_tags %}
+
+{% block content %}
+<style>
+    .image-div {
+        position: relative;
+        width: 100%;
+    }
+
+    /* Make the image to responsive */
+    .image {
+        width: 100%;
+        height: auto;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: .3s ease;
+        background-color: #fb873f;
+    }
+
+    .container:hover .overlay {
+        opacity: 1;
+    }
+
+    .icon {
+        color: white;
+        font-size: 100px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: none;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .icon:hover {
+        color: white !important;
+    }
+
+    .fa-user:hover {
+        color: #294bdf !important;
+    }
+
+    .para {
+        max-height: 150px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .para::before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 100%;
+        bottom: 0;
+        pointer-events: none;
+        background: linear-gradient(to bottom, transparent, white);
+    }
+
+
+    .check {
+        appearance: none;
+        padding: 0.5em;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        background: #f69050;
+        color: white;
+    }
+
+    .check:hover {
+        background: #fff;
+        color: #f69050;
+        border: 1px solid #f69050;
+    }
+
+
+
+    .check::before {
+        content: "Read more +";
+    }
+
+    .check:checked::before {
+        content: "Read less -";
+    }
+
+    .para:has(+ .check:checked) {
+        max-height: none;
+    }
+</style>
+
+<div class="container-xxl py-2">
+    <div class="container mt-2">
+        <div class="row p-2">
+            <div class="col-lg-9 col-md-6">
+                <h2>{{course.category.name}} : {{course.title}}</h2>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a href="{% url 'editor' %}" class="text-decoration-none btn btn-md text-white">Code Editor</a>
+
+                <a href="{% url 'my-course' %}" class="text-decoration-none btn btn-md text-white">Back to
+                    Course</a>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false"
+        data-bs-backdrop="false">
+        <div class="offcanvas-header">
+            <h4>{{course.title}}</h4>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <hr>
+        <div class="offcanvas-body px-0">
+            {% for lesson in course.lesson_set.all %}
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item m-2">
+                    <h2 class="accordion-header" id="headingOne" style="background: transparent;">
+                        <button class="accordion-button text-dark" style="background: transparent;" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#id{{lesson.id}}" aria-expanded="true"
+                            aria-controls="collapseOne">
+                            {{lesson.name}}
+                        </button>
+                    </h2>
+                    {% for video in lesson.video_set.all %}
+                    <div id="id{{video.lesson.id}}" class="accordion-collapse collapse show"
+                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+
+                        <a href="https://www.youtube.com/watch?v={{video.youtube_id}}" data-fancybox>
+                            <div class="accordion-body text-secondary d-flex justify-space-between">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <a href="?lecture={{video.id}}" class="text-dark">
+                                            <p><i class="fa fa-youtube" style="color: red;"></i>
+                                                {{video.title}}</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="badge rounded-pill text-white bg-info px-3 py-2 m-2"
+                                            style="font-size: 12px; font-weight: normal;">{{video.time_duration}}
+                                            min</span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </a>
+
+
+
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col min-vh-100 py-3">
+
+                <button class="btn float-end text-white" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
+                    role="button">
+                    <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvas"></i>
+                </button>
+                <h4 class="font-size-xxl mb-5">{{video.title}}</h4>
+
+                <div class="image-div">
+                    <img src="/media/{{video.thumbnail}}" alt="Avatar" class="image img-fluid"
+                        style="width: 100%; height: 500px;">
+                    <div class="overlay">
+
+                        <button type="button" class="btn icon border-0" title="Lesson Video" data-bs-toggle="modal"
+                            data-bs-target="#video">
+                            <i class="fa fa-play"></i>
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="video" tabindex="-1" aria-labelledby="videoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="videoLabel">{{video.title}}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe height="550px" width="100%"
+                                    src="https://www.youtube.com/embed/{{video.youtube_id}}"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3 class="mt-4">Course Description</h3>
+
+                <p class="para mb-6 line-height-md">{{course.description|slice:"0:200"}} <span>
+                        {{course.description|slice:"200:3000"}}</span></p>
+                <input type="checkbox" class="check" />
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

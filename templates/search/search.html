@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+{% load static %}
+{% load course_tags %}
+{% block content %}
+
+<!-- Courses Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+
+            <h1 class="mb-5" style="color: #fb873f;">Search Result :</h1>
+        </div>
+        {% if course|length < 1 %} 
+        <center>
+            <div class="row align-items-center">
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class=" image">
+                        <img src="{% static 'img/Course-not-Found.jpg' %}" class="img-fluid" >
+                    </div>
+        
+                </div>
+            </div>
+        </center>
+            {% else %}
+            <div class="row g-4 ">
+                {% for i in course%}
+                        <div class="col-12 col-md-6 col-xl-3 pb-4 pb-md-7" data-aos="fade-up" data-aos-delay="50"
+                            >
+
+                            <div class="card shadow">
+                                <img src="/media/{{i.featured_image}}" class="card-img-top p-2" alt="..."
+                                    style="height: 200px;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="{{i.get_absolute_url}}"
+                                            class="text-dark">{{i.title}}</a></h5>
+                                    <div>
+                                        <img src="/media/{{i.author.author_profile}}" class="card-img-top p-2" alt="..." style="width: 50px;">
+                                        <small class="text-muted">{{i.author.name}}</small>
+                                    </div>
+                                        
+                                    <div class="d-flex">
+                                        <small class="flex-fill text-center py-1 px-1"><i
+                                                class="fa fa-star text-warning me-1"></i>
+                                            4.55</small>
+                                        <small class="flex-fill text-left py-1 px-1"><i
+                                                class="fa fa-user-graduate me-1"></i>{{i.usercourse_set.all.count}}
+                                            Learners</small>
+                                        <small class="flex-fill text-center py-1 px-1"><i
+                                                class="fa fa-user me-1"></i>{{i.level}}</small>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        {% if i.price == 0 %}
+                                        <small class="py-1 px-1 fw-bold fs-6 text-center">FREE</small>
+                                        {% else %}
+                                        <small class="py-1 px-1 fw-bold fs-6 text-center"><del class="me-2">₹
+                                                {{i.price}}</del> ₹ {% discount_calculation i.price i.discount %}</small>
+                                        {% endif %}
+
+                                        <small class=" text-primary py-1 px-1 fw-bold fs-6" style="float:right;"><a
+                                                href="{{i.get_absolute_url}}">Enroll Now <i
+                                                class="fa fa-chevron-right me-1 fs-10"></i></a></small>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+
+            </div>
+            {% endif %}
+
+    </div>
+</div>
+<div class="container text-center">
+    <a class="btn text-light py-3 px-5 mt-2 mb-5" href="{% url 'courses' %}">All Courses</a>
+</div>
+<!-- Courses End -->
+
+{% endblock %}

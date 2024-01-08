@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Student Reviews{% endblock %}
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Testimonial</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Testimonial</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+
+<!-- Testimonial Start -->
+
+
+
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="text-center">
+            <h1 class=" bg-white text-center px-3" style="color: #fb873f;">Success stories</h1>
+            <p class="mb-5">Can Secret Coder courses help your career? Our learners tell us how.</p>
+        </div>
+
+        <div class="message m-5 p-4">
+            {% include 'components/message.html' %}
+        </div>
+
+        <div class="owl-carousel testimonial-carousel position-relative">
+            {% for r in reviews %}
+            <div class="testimonial-item text-center">
+                {% if r.profile.profile_image %}
+                <img class="border rounded-circle p-2 mx-auto mb-3" src="{{ r.profile.profile_image.url }}"
+                    style="width: 80px; height: 80px;">
+                {% else %}
+                <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'img/default.jpg' %}"
+                    style="width: 80px; height: 80px;">
+                {% endif %}
+
+                <h5 class="mb-0">{{r.name}}</h5>
+                <div class="testimonial-text bg-light text-center p-4 mt-4">
+                    <p class="mb-0">{{r.review}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+
+    <div class="row mt-5 p-5">
+        <div class="col-12 text-center">
+            <div class="p-2">
+                <a href="{% url 'create_review' %}" class="btn text-white btn-md">Add Your Review</a>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+<!-- Testimonial End -->
+
+
+{% endblock %}

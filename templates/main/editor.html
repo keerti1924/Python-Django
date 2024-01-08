@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% block title %}Code Editor{% endblock %}
+{% load static %}
+
+{% block content %}
+<style>
+    .container-1 {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    .editor-wrapper {
+        flex: 1;
+        display: flex;
+        height: 300px;
+    }
+
+    .editor-wrapper1 {
+        flex: 1;
+        display: flex;
+        height: 300px;
+    }
+
+    textarea {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        color: #fff;
+        padding: 10px;
+        font-family: monospace;
+    }
+
+    .text {
+        width: 100%;
+        height: 100%;
+        background: #000;
+        color: #fff;
+        padding: 10px;
+        font-family: monospace;
+    }
+
+    .output-wrapper {
+        flex: 1;
+        padding: 10px;
+        height: 400px;
+    }
+
+    .output-wrapper1 {
+        flex: 1;
+        padding: 10px;
+        height: 400px;
+    }
+
+    #output {
+        height: 100%;
+    }
+</style>
+
+<div class="container-fluid py-4 mt-3">
+    <div class="container-1 d-none d-sm-none d-md-none d-lg-block shadow">
+        <div class="editor-wrapper">
+            <textarea id="html-editor" placeholder="HTML code"></textarea>
+            <textarea id="css-editor" placeholder="CSS code"></textarea>
+            <textarea id="js-editor" placeholder="JavaScript code"></textarea>
+        </div>
+        <div class="output-wrapper">
+            <div id="output">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs d-sm-block d-md-block d-lg-none">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active button" id="pills-home-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                    aria-selected="true">HTML</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link button" id="pills-profile-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                    aria-selected="false">CSS</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link button" id="pills-contact-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                    aria-selected="false">JavaScript</button>
+            </li>
+        </ul>
+        <div class="container-2">
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+                    tabindex="0">
+                    <div class="editor-wrapper1">
+                        <textarea id="html-editor1" class="text" placeholder="HTML code"></textarea>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
+                    tabindex="0">
+                    <div class="editor-wrapper1">
+                        <textarea id="css-editor1" class="text" placeholder="CSS code"></textarea>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
+                    tabindex="0">
+                    <div class="editor-wrapper1">
+                        <textarea id="js-editor1" class="text" placeholder="JavaScript code"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-wrapper1">
+                <div id="output1"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    const htmlEditor = document.getElementById('html-editor');
+    const cssEditor = document.getElementById('css-editor');
+    const jsEditor = document.getElementById('js-editor');
+    const output = document.getElementById('output');
+
+
+    function updateOutput() {
+        const html = htmlEditor.value;
+        const css = cssEditor.value;
+        const js = jsEditor.value;
+
+        const style = document.createElement('style');
+        style.textContent = css;
+        document.head.appendChild(style);
+
+        const script = document.createElement('script');
+        script.textContent = js;
+        document.head.appendChild(script);
+
+        output.innerHTML = html;
+    }
+
+    htmlEditor.addEventListener('input', updateOutput);
+    cssEditor.addEventListener('input', updateOutput);
+    jsEditor.addEventListener('input', updateOutput);
+
+    updateOutput(); // Initial render
+
+
+    const htmlEditor1 = document.getElementById('html-editor1');
+    const cssEditor1 = document.getElementById('css-editor1');
+    const jsEditor1 = document.getElementById('js-editor1');
+    const output1 = document.getElementById('output1');
+
+    function updateOutput1() {
+        const html1 = htmlEditor1.value;
+        const css1 = cssEditor1.value;
+        const js1 = jsEditor1.value;
+
+        const style = document.createElement('style');
+        style.textContent = css1;
+        document.head.appendChild(style);
+
+        const script = document.createElement('script');
+        script.textContent = js1;
+        document.head.appendChild(script);
+
+        output1.innerHTML = html1;
+    }
+
+    htmlEditor1.addEventListener('input', updateOutput1);
+    cssEditor1.addEventListener('input', updateOutput1);
+    jsEditor1.addEventListener('input', updateOutput1);
+
+    updateOutput1();
+
+</script>
+{% endblock %}

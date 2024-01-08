@@ -1,0 +1,140 @@
+{% load static %}
+
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
+</script>
+<script>
+    window.watsonAssistantChatOptions = {
+      integrationID: "65131fdb-0203-4c15-a9d1-07139f24b384", // The ID of this integration.
+      region: "eu-gb", // The region your integration is hosted in.
+      serviceInstanceID: "edbeeede-49be-492f-958b-eaff922d7f3f", // The ID of your service instance.
+      onLoad: async (instance) => { await instance.render(); }
+    };
+    setTimeout(function(){
+      const t=document.createElement('script');
+      t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+      document.head.appendChild(t);
+    });
+  </script>
+
+
+<!-- Navbar Start -->
+<div class="topnav py-1 px-lg-5 px-2 bg-dark d-flex justify-content-between align-items-center">
+    <div>
+        <a href="" class="text-white"><i class="fa fa-phone-alt me-1"></i>+91 8683045908</a>
+    </div>
+    <div>
+        <div id="google_translate_element"></div>
+    </div>
+
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0" style="background-color: #fdfdfd;">
+    <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <p class="m-0 fw-bold" style="font-size: 25px;"><img src="{% static 'img/icon.png' %}" alt=""
+                height="50px">Secret<span style="color: #fb873f;">Coder</span></p>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+            <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+            <a href="{% url 'courses' %}" class="nav-item nav-link">Courses</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="{% url 'team' %}" class="dropdown-item">Our Team</a>
+                    <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+
+                </div>
+            </div>
+            <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+
+            <a class=" nav-item nav-link d-flex search-mobile text-white-all icon-xs d-none d-sm-none d-md-none d-lg-block"
+                data-bs-toggle="collapse" href="#collapseSearchMobile" role="button" aria-expanded="false"
+                aria-controls="collapseSearchMobile">
+                <!-- Icon -->
+                <i class="fa fa-search"></i>
+            </a>
+
+            <div class="collapse position-absolute mx-4" id="collapseSearchMobile" style="margin-top: 70px;">
+                <div class="card card-body p-4 mt-6 mt-xl-4 shadow-dark">
+                    <!-- Search -->
+                    <form style="width: 400px;" method="GET" action="{% url 'search_course' %}">
+                        <div class="input-group border rounded">
+                            <input class="form-control form-control-sm border-0 ps-0 py-2 px-2" type="search"
+                                placeholder="🔍 Search Here" aria-label="Search" name="query">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <a href="#" class="nav-item nav-link d-sm-block d-md-block d-lg-none">
+                <form class="form-inline" method="GET" action="{% url 'search_course' %}">
+                    <input class="form-control border-0" type="search" aria-label="Search" name="query"
+                        placeholder="🔍 Search Here">
+                </form>
+            </a>
+
+            {% if user.is_authenticated and user.first_name == '' %}
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    {% if user.profile.profile_image %}
+                    <img src="{{user.profile.profile_image.url}}" alt="" name="image" class="rounded-circle"
+                        height="30px" width="30px">
+                    {% else %}
+                    <img src="{% static 'img/default.jpg' %}" alt="" name="image" class="rounded-circle" height="30px"
+                        width="30px">
+                    {% endif %}
+                    Welcome, {{user.username}}
+                </a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="{% url 'profile' %}" class="dropdown-item">Your Profile</a>
+                    <a href="{% url 'my-course' %}" class="dropdown-item">My Courses</a>
+                    <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+
+                </div>
+            </div>
+
+            {% elif user.is_authenticated %}
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    {% if user.profile.profile_image %}
+                    <img src="{{user.profile.profile_image.url}}" alt="" name="image" class="rounded-circle"
+                        height="30px" width="30px">
+                    {% else %}
+                    <img src="{% static 'img/default.jpg' %}" alt="" name="image" class="rounded-circle" height="30px"
+                        width="30px">
+                    {% endif %}
+                    Welcome, {{user.username}}
+                </a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="{% url 'profile' %}" class="dropdown-item">Your Profile</a>
+                    <a href="{% url 'my-course' %}" class="dropdown-item">My Courses</a>
+                    <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+
+                </div>
+            </div>
+
+
+            {% else %}
+            <li class="nav-item px-3">
+                <a href="{% url 'register' %}" class="nav-link">
+                    <i class="fa fa-user"></i>
+                </a>
+            </li>
+            {% endif %}
+
+
+        </div>
+    </div>
+</nav>
+
+
+
+
+<!-- Navbar End -->
