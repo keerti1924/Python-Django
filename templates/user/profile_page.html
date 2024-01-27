@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .gradient-custom {
+        background: #f6d365;
+
+        background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+
+        background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+    }
+</style>
+
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Profile</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Profile</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Profile-section  -->
+
+<section class="vh-50">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <center>
+                <div class="message" style="max-width: 630px;">
+                    {% include 'components/message.html' %}
+                </div>
+            </center>
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+                <div class="card mb-3 shadow" style="border-radius: .5rem;">
+                    <div class="row g-0">
+
+                        <div class="col-md-4 gradient-custom text-center text-white p-4"
+                            style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            {% if user.profile.profile_image %}
+                            <img src="{{user.profile.profile_image.url}}" alt="Avatar" class="img-fluid my-5"
+                                style="width: 150px; height: 150px; border-radius: 50%; border:10px solid #fff;" />
+                            {% else %}
+                            <img src="{% static 'img/default.jpg' %}" alt="Avatar" class="img-fluid my-5"
+                                style="width: 150px; height: 150px; border-radius: 50%; border:10px solid #fff;" />
+                            
+                            {% endif %}
+                            
+                            <h4 class="text-white">{{user.profile.first_name}} {{user.profile.last_name}}</h4>
+                            <a href="{% url 'profile_update' %}" class="text-light">
+                                <i class="far fa-edit mb-5" title="Edit Profile"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-8 p-4">
+                            <div class="card-body p-4">
+                                <h4>Personal Information</h4>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6">
+                                        <h6>Username</h6>
+                                        <p class="text-muted">{{user.profile.username}}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6>Phone No.</h6>
+                                        <p class="text-muted">{{user.profile.phone}}</p>
+                                    </div>
+                                </div>
+                                <div class="row pt-1">
+
+                                    <div class="col-12">
+                                        <h6>Email</h6>
+                                        <p class="text-muted">{{user.profile.email}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-1">
+
+                                    <div class="col-12">
+                                        <h6>About</h6>
+                                        <p class="text-muted">{{user.profile.desc}}</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Profile-section End -->
+
+{% endblock %}

@@ -1,0 +1,639 @@
+{% extends 'base.html' %}
+{% block title %}{{course.title}}{% endblock %}
+{% load static %}
+{% load course_tags %}
+
+{% block content %}
+
+<style>
+    .tabs ul li {
+        list-style-type: none;
+    }
+
+    .tabs ul li a {
+        font-size: 25px;
+        color: #4e4e4e !important;
+        font-weight: 500;
+    }
+
+    .tabs ul li a.active {
+        color: #f69050 !important;
+    }
+
+    .tabs ul li a:hover {
+        color: #f69050 !important;
+    }
+
+    .para {
+        max-height: 150px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .para::before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 100%;
+        bottom: 0;
+        pointer-events: none;
+        background: linear-gradient(to bottom, transparent, white);
+    }
+
+
+    .check {
+        appearance: none;
+        padding: 0.5em;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        background: #f69050;
+        color: white;
+    }
+
+    .check:hover {
+        background: #fff;
+        color: #f69050;
+        border: 1px solid #f69050;
+    }
+
+
+
+    .check::before {
+        content: "Read more +";
+    }
+
+    .check:checked::before {
+        content: "Read less -";
+    }
+
+    .para:has(+ .check:checked) {
+        max-height: none;
+    }
+</style>
+
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">{{course.title}}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="{% url 'courses' %}">Courses</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">{{course.title}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Course Detail Start -->
+<div class="container-xxl py-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 wow fadeInUp">
+
+                <div class="container">
+                    <div class="row g-5 justify-content-center">
+
+                        <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.3s">
+                            <h2>{{course.title}}({{course.category}})</h2>
+                            <p>{{course.short_desc|truncatewords:50}}</p>
+                            <div class="d-flex">
+                                <small><i class="fa fa-star text-warning"></i>
+                                    4.55</small>
+                                <small style="margin-left: 15px;"><i class="fa fa-user-graduate"></i>
+                                    {{course.usercourse_set.all.count}} students
+                                </small>
+                                <small style="margin-left: 15px;"><i class="fa fa-user"></i> {{course.level}}</small>
+                                <small style="margin-left: 15px;"><i class="fa fa-clock me-2"></i> {{time_duration.sum}}
+                                    min</small>
+
+                            </div>
+                            <div class="image-div text-left mt-3">
+                                <img src="/media/{{course.author.author_profile}}" alt=""
+                                    style="height: 40px; width: 40px; border-radius: 50%;">
+                                <span style="margin-left: 10px;"><b>Instructor Name</b> -
+                                    {{course.author.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container-fluid wow fadeInUp mt-5 tabs d-none d-sm-none d-md-none d-lg-block">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#Overview">Overview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Curriculum">Curriculum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Instructor">Instructor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Comments">Comments</a>
+                        </li>
+
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content mt-4">
+
+                        <div class="tab-pane container active" id="Overview">
+                            <h2>Course Description</h2>
+                            <p class="para">{{course.description|slice:"0:200"}} <span>
+                                    {{course.description|slice:"200:3000"}}</span></p>
+                            <input type="checkbox" class="check" />
+
+                            <h2 class="mt-4">
+                                What you'll learn
+                            </h2>
+                            <div class="row m-2">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <ul>
+                                        {% for learn in course.what_you_learn_set.all|slice:"0:5" %}
+                                        <li><i class="fa fa-check"></i> {{learn.points}}</li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <ul>
+                                        {% for learn in course.what_you_learn_set.all|slice:"5:10" %}
+                                        <li><i class="fa fa-check"></i> {{learn.points}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <h2 class="mt-4">
+                                Skills you'll gain
+                            </h2>
+                            {% for r in course.requirements_set.all %}
+                            <span class="badge rounded-pill text-white bg-primary px-4 py-2 m-2"
+                                style="font-size: 15px; font-weight: normal;">{{r.points}}</span>
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="tab-pane container fade" id="Curriculum">
+
+                            {% for lesson in course.lesson_set.all %}
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item mb-4">
+                                    <h2 class="accordion-header" id="headingOne" style="background: transparent;">
+                                        <button class="accordion-button text-dark" style="background: transparent;"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#id{{lesson.id}}"
+                                            aria-expanded="true" aria-controls="collapseOne">
+                                            {{lesson.name}}
+                                        </button>
+                                    </h2>
+                                    {% for video in lesson.video_set.all %}
+                                    <div id="id{{video.lesson.id}}" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+
+                                        {% if check_enroll is not None %}
+                                        <a href="/course/watch-course/{{course.slug}}">
+                                            <div class="accordion-body text-secondary d-flex justify-content-between"
+                                                data-toggle="tooltip" title="Click and Show Video">
+                                                <p><i class="fa fa-youtube" style="margin-right: 10px; color: red;"></i>
+                                                    {{video.title}}</p>
+                                                <span class="badge rounded-pill text-white bg-info px-3 py-2 m-2"
+                                                    style="font-size: 12px; font-weight: normal;">{{video.time_duration}}
+                                                    min</span>
+                                            </div>
+                                        </a>
+                                        {% else %}
+                                        {% if video.preview == True %}
+                                        <a href="https://www.youtube.com/watch?v={{video.youtube_id}}" class="rounded"
+                                            data-fancybox>
+                                            <div class="accordion-body text-secondary d-flex justify-content-between">
+                                                <p class="fw-bold text-dark"><i class="fa fa-youtube"
+                                                        style="margin-right: 10px; color: red;"></i>
+                                                    {{video.title}}</p>
+                                                <span class="badge rounded-pill text-white bg-info px-3 py-2 m-2"
+                                                    style="font-size: 12px; font-weight: normal;">{{video.time_duration}}
+                                                    min</span>
+                                            </div>
+                                        </a>
+                                        {% else %}
+                                        <div class="accordion-body text-secondary d-flex justify-content-between"
+                                            data-toggle="tooltip" title="Enroll this course">
+                                            <p><i class="fa fa-youtube" style="margin-right: 10px; color: red;"></i>
+                                                {{video.title}}</p>
+                                            <span class="badge rounded-pill text-white bg-info px-3 py-2 m-2"
+                                                style="font-size: 12px; font-weight: normal;">{{video.time_duration}}
+                                                min</span>
+                                        </div>
+                                        {% endif %}
+                                        {% endif %}
+
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+
+
+                        </div>
+                        <div class="tab-pane container fade" id="Instructor">
+                            <h2 class="mt-4">About the Instructor</h2>
+                            <div class="image-div text-left mt-4">
+                                <div class="row align-items-center">
+                                    <div class="col-2">
+                                        <img src="/media/{{course.author.author_profile}}" alt=""
+                                            style="height: 100px; width: 100px; border-radius: 50%;">
+                                    </div>
+                                    <div class="col-10 mt-4">
+                                        <h5>{{course.author.name}}</h5>
+
+                                        <div class="row align-items-center p-3">
+                                            <div class="col-6">
+                                                <p><i class="fa fa-graduation-cap"></i>
+                                                    {{course.usercourse_set.all.count}} students</p>
+
+                                            </div>
+                                            <div class="col-6">
+                                                <p><i class="fa fa-video"></i>
+                                                    {{course.author.course_set.all.count}} courses</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="des mt-4">
+                                    {{course.author.about_author}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane container fade" id="Comments">
+                            <h2 class="my-4">Comment</h2>
+                            <div class="container py-4">
+                                {% for comment in comments %}
+                                <div class="row mb-4 align-items-center">
+
+                                    <div class="col-2">
+                                        <img src="{{comment.user.profile.profile_image.url}}" alt=""
+                                            style="border-radius: 50%; width: 80px ; height: 80px;">
+                                    </div>
+                                    <div class="col-8 text-start" style="float: left;">
+                                        <h6 class="text-capitalize">{{comment.user}}</h6>
+                                        <p>{{comment.content}}</p>
+                                    </div>
+                                    {% if comment.rating == 1 %}
+                                    <div class="col-2">
+                                        <i class="fa fa-star text-warning"></i>
+                                    </div>
+                                    {% elif comment.rating == 2 %}
+                                    <div class="col-2">
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                    </div>
+                                    {% elif comment.rating == 3 %}
+                                    <div class="col-2">
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                    </div>
+                                    {% elif comment.rating == 4 %}
+                                    <div class="col-2">
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                    </div>
+                                    {% elif comment.rating == 5 %}
+                                    <div class="col-2">
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                                {% endfor %}
+
+
+                                {% if user.is_authenticated %}
+                                <form method="POST" action="{% url 'add_comment' course.id %}"
+                                    class="shadow wow-fadeup mt-4 p-4">
+                                    {% csrf_token %}
+                                    <h3 class="my-4">Add comments & Rating</h3>
+                                    {% include 'components/message.html' %}
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control" name="rating"
+                                                    placeholder="Rating">
+                                                <label for="rating">Rating</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <textarea class="form-control" placeholder="Leave a comment here"
+                                                    name="content" style="height: 150px"></textarea>
+                                                <label for="content">Content</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="tab-content mt-4 d-sm-block d-md-block d-lg-none">
+
+                    <div class="container active">
+                        <h2>Course Description</h2>
+                        <p class="para">{{course.description|slice:"0:100"}}
+                            <span>{{course.description|slice:"100:3000"}}</span>
+                        </p>
+                        <input type="checkbox" class="check" />
+
+                        <h2 class="mt-4">
+                            What you'll learn
+                        </h2>
+                        <div class="row p-2">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <ul style="list-style: none;">
+                                    {% for learn in course.what_you_learn_set.all|slice:"0:5" %}
+                                    <li><i class="fa fa-check"></i> {{learn.points}}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <ul style="list-style: none;">
+                                    {% for learn in course.what_you_learn_set.all|slice:"5:10" %}
+                                    <li><i class="fa fa-check"></i> {{learn.points}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <h2 class="mt-4">
+                            Skills you'll gain
+                        </h2>
+                        {% for r in course.requirements_set.all %}
+                        <span class="badge rounded-pill text-white bg-primary px-4 py-2 m-2"
+                            style="font-size: 15px; font-weight: normal;">{{r.points}}</span>
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="container">
+                        <h2 class="mt-4">
+                            Curriculum
+                        </h2>
+
+                        {% for lesson in course.lesson_set.all %}
+                        <div class="accordion" id="lesson">
+                            <div class="accordion-item mb-4">
+                                <h2 class="accordion-header" id="headingOne" style="background: transparent;">
+                                    <button class="accordion-button text-dark" style="background: transparent;"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#id{{lesson.id}}"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        {{lesson.name}}
+
+                                    </button>
+                                </h2>
+                                {% for video in lesson.video_set.all %}
+                                <div id="id{{video.lesson.id}}" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne" data-bs-parent="#lesson">
+
+                                    {% if check_enroll is not None %}
+                                    <a href="/course/watch-course/{{course.slug}}">
+                                        <div class="accordion-body text-secondary d-flex justify-content-between"
+                                            data-toggle="tooltip" title="Click and Show Video">
+                                            <p><i class="fa fa-youtube" style=" color: red;"></i>
+                                                {{video.title}}</p>
+
+                                        </div>
+                                    </a>
+                                    {% else %}
+                                    {% if video.preview == True %}
+                                    <a href="https://www.youtube.com/watch?v={{video.youtube_id}}" class="rounded"
+                                        data-fancybox>
+                                        <div class="accordion-body text-secondary d-flex justify-content-between">
+                                            <p class="fw-bold text-dark"><i class="fa fa-youtube"
+                                                    style="color: red;"></i>
+                                                {{video.title}}</p>
+
+                                        </div>
+                                    </a>
+                                    {% else %}
+                                    <div class="accordion-body text-secondary d-flex justify-content-between"
+                                        data-toggle="tooltip" title="Enroll this course">
+                                        <p><i class="fa fa-youtube" style="margin-right: 10px; color: red;"></i>
+                                            {{video.title}}</p>
+
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                    <div class="container">
+                        <h2 class="mt-4">About the Instructor</h2>
+                        <div class="image-div text-left mt-4">
+                            <div class="row align-items-center ">
+                                <div class="col-4">
+                                    <img src="/media/{{course.author.author_profile}}" alt=""
+                                        style="height: 80px; width: 80px; border-radius: 50%;">
+                                </div>
+                                <div class="col-8 mt-2">
+                                    <h5>{{course.author.name}}</h5>
+                                    <p><i class="fa fa-graduation-cap"></i>
+                                        {{course.usercourse_set.all.count}} students</p>
+                                    <p><i class="fa fa-video"></i>
+                                        {{course.author.course_set.all.count}} courses</p>
+                                </div>
+
+
+                            </div>
+
+                            <div class="des mt-4">
+                                {{course.author.about_author}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+
+                        <h2 class="my-4">Comment</h2>
+                        <div class="container">
+                            <div class="comment">
+                                {% for comment in comments %}
+                                <div class="row mb-4 d-flex justify-content-between">
+                                    <div class="col-3 ">
+                                        <img src="{{comment.user.profile.profile_image.url}}" alt=""
+                                            style="border-radius: 50%; width: 80px ; height: 80px;">
+                                    </div>
+                                    <div class="col-9 text-start" style="float: left;">
+                                        <h6>{{comment.user}}</h6>
+                                        <p>{{comment.content}}
+                                        </p>
+                                        <div class="rating">
+                                            {% if comment.rating == 1 %}
+                                            <div class="">
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                            {% elif comment.rating == 2 %}
+                                            <div class="">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                            {% elif comment.rating == 3 %}
+                                            <div class="">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                            {% elif comment.rating == 4 %}
+                                            <div class="">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                            {% elif comment.rating == 5 %}
+                                            <div class="">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% if user.is_authenticated %}
+                            <form method="POST" action="{% url 'add_comment' course.id %}"
+                                class="shadow wow-fadeup p-4 mt-4 mb-5">
+                                {% csrf_token %}
+                                <h3 class="my-4">Add comments & Rating</h3>
+                                {% include 'components/message.html' %}
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" name="rating"
+                                                placeholder="Rating">
+                                            <label for="rating">Rating</label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a comment here"
+                                                name="content" style="height: 150px"></textarea>
+                                            <label for="content">Content</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-12 shadow wow fadeInUp" data-wow-delay="0.3s">
+
+                <div class="image text-center">
+                    <img class="img-fluid mt-2" src="/media/{{course.featured_image}}" alt="">
+                </div>
+                {% if course.price == 0 %}
+                <h4 class="mt-2 p-2">Free <small></small></h4>
+                {% else %}
+                <h4 class="mt-2 p-2">
+                    <small>₹ <del>{{course.price}}</del> ₹ {% discount_calculation course.price course.discount %}</small>
+                </h4>
+                {% endif %}
+
+                <div class="buttons">
+                    {% if check_enroll is None %}
+                    <a href="/checkout/{{course.slug}}"
+                        class="text-decoration-none text-white btn p-3 w-100 mb-2">ENROLL NOW</a>
+                    {% else %}
+                    <a href="{% url 'my-course' %}" class="text-decoration-none text-white btn p-3 w-100"
+                        disabled>ALREADY ENROLLED</a>
+                    {% endif %}
+                </div>
+                <div class="list mt-2">
+                    <div class="list1 d-flex justify-content-between pt-2 border-bottom">
+                        <p><i class="fa fa-clock"></i> Duration</p>
+                        <p>{{time_duration.sum }} min</p>
+                    </div>
+                    <div class="list2 d-flex justify-content-between pt-2 border-bottom">
+                        <p><i class="fa fa-book"></i> Lectures</p>
+                        <p>{{course.video_set.all.count}}</p>
+                    </div>
+                    <div class="list3 d-flex justify-content-between pt-2 border-bottom">
+                        <p><i class="fa fa-bolt"></i> Enrolled</p>
+                        <p>{{course.usercourse_set.all.count}} students</p>
+                    </div>
+                    <div class="list4 d-flex justify-content-between pt-2 border-bottom">
+                        <p><i class="fa fa-google-translate"></i> Language</p>
+                        <p>{{course.language}}</p>
+                    </div>
+                    <div class="list5 d-flex justify-content-between pt-2 border-bottom">
+                        <p><i class="fa fa-list"></i> Skill Level</p>
+                        <p>{{course.level.name}}</p>
+                    </div>
+                    <div class="list6 d-flex justify-content-between pt-2 border-bottom">
+                        <p><i class="fa fa-list"></i> Deadline</p>
+                        <p>{{course.deadline}}</p>
+                    </div>
+                    <div class="list7 d-flex justify-content-between pt-2 border-bottom">
+                        <p><i class="fa fa-certificate"></i> Certificate</p>
+                        <p>{{course.certificate}}</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Course Detail End -->
+
+
+{% endblock %}

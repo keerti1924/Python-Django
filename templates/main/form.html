@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Instructor Registration Form{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row py-2">
+            <div class="col-12 text-center">
+                <center>
+                    <form class="shadow p-5" style="max-width:1000px;">
+                        <h5 class="mb-4 py-2">Join SecretCoder's Global Community
+                            of Expert Instructors</h5>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="name" placeholder="Name" required>
+                                    <label for="name">Name</label>
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                                    <label for="email">Your Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="tel" class="form-control" id="phone" placeholder="Phone Number" required>
+                                    <label for="name">Phone Number</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="password" placeholder="Your Password">
+                                    <label for="password">Your Password</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <select id="degree" name="degree" class="form-select">
+                                        <option value="High School">High School</option>
+                                        <option value="Undergraduate">Undergraduate</option>
+                                        <option value="Graduate">Graduate</option>
+                                        <option value="Post-Graduate">Post-Graduate</option>
+                                    </select>
+                                    <label for="degree">What is the highest degree ?</label>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <select name="subject" id="subject" class="form-select">
+                                        <option value="Technology">Technology</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Business">Business</option>
+                                        <option value="Education">Education</option>
+                                    </select>
+                                    <label for="subject">What subject would you like to teach?</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a message here" id="address"
+                                        style="height: 150px"></textarea>
+                                    <label for="message">Address</label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="">
+                                    <input type="checkbox">
+                                    I acknowledge and warrant the truthfulness of the information I submit, I also
+                                    acknowledge that I have read, understand, and I agree with all Terms of service, and
+                                    that I fully agree that all sales are final and that there are no refunds
+                                    whatsoever.
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <a class="btn text-white btn-lg py-2" style="float: right;" href="{% url 'form' %}">Submit
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

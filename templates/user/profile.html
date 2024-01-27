@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .my-form {
+        padding: 20px;
+    }
+
+    .my-form label {
+        font-size: 50px;
+    }
+</style>
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Profile Update</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Profile Update</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+
+<!-- Profile Update Start -->
+<div class="container-xxl py-1">
+    <div class="container">
+
+        <div class="row g-4">
+
+
+
+            <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
+                <center>
+                    <form class="shadow p-4" style="max-width: 600px;" method="POST" action="{% url 'profile_update' %}"
+                        enctype="multipart/form-data" class="my-form">
+                        {% csrf_token %}
+                        {% include 'components/message.html' %}
+
+                        <div class="row g-3 mb-5">
+                            <div class="col-12 text-center mb-4">
+                                <div class="form-floating">
+                                    {% if user.profile.profile_image %}
+                                    <img src="{{ user.profile.profile_image.url }}" alt=""
+                                        style="border-radius: 50%; border:5px solid #f69050; padding: 5px;;"
+                                        height="150px" width="150px">
+                                    {% else %}
+                                    <img src="{% static 'img/default.jpg' %}" alt=""
+                                        style="border-radius: 50%; border:5px solid #f69050; padding: 5px;;"
+                                        height="150px" width="150px">
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                {{form.profile_image}}
+                            </div>
+                            <div class="col-12">
+
+                                {{form.username}}
+                            </div>
+                            <div class="col-12">
+
+                                {{form.first_name}}
+                            </div>
+                            <div class="col-12">
+
+                                {{form.last_name}}
+                            </div>
+
+                            <div class="col-12">
+
+                                {{form.email}}
+                            </div>
+                            <div class="col-12">
+
+                                {{form.phone}}
+                            </div>
+                            <div class="col-12">
+                                {{form.desc}}
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn btn-primary py-3" type="submit" style="width: 400px;">Update Profile</button>
+                        </div>
+            </div>
+            </form>
+            </center>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Profile Update End -->
+{% endblock %}

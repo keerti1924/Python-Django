@@ -1,0 +1,319 @@
+{% extends 'base.html' %}
+{% block title %}Courses{% endblock %}
+{% load static %}
+{% load course_tags %}
+{% block content %}
+
+
+<script>
+    $(document).ready(function () {
+
+        $(".filter-checkbox").on('click', function () {
+            var filter_object = {};
+            $(".filter-checkbox").each(function (index, ele) {
+                var filter_value = $(this).val();
+                var filter_key = $(this).data('filter');
+                console.log(filter_key, filter_value);
+                filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function (el) {
+                    return el.value;
+                });
+            });
+
+            $.ajax({
+                url: '{% url 'filter-data' %}',
+                data: filter_object,
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res)
+                    $("#filteredCourse").html(res.data);
+                    var filter_value = $(this).val();
+                    var filter_key = $(this).data('filter');
+                }
+            });
+    });
+    });
+</script>
+
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Courses</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Courses</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+
+<div class="container-xxl">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="wow fadeInUp" data-wow-delay="0.3s">
+                    <h3>Learn Free Online</h3>
+                    <p>Whether you're just starting out or already have some experience, we offer various Free courses
+                        designed to fit your needs. Curated from top educational institutions and industry leaders, our
+                        selection of Free courses aims to provide quality training for everyone—from individual learners
+                        seeking personal growth to corporate teams looking to upskill. For those pursuing professional
+                        advancement, skill acquisition, or even a new career path, these Free courses can be a valuable
+                        resource. Take the next step in your professional journey and enroll in a Free course today!</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container-xxl">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 wow fadeInUp d-sm-block d-md-block d-lg-none" data-wow-delay="0.1s">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn text-white border-0" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Filter <i class="fa fa-filter"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Filter By :</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <div class="col-lg-12 col-md-6 col-sm-12 p-2">
+                                            <h4 class="mb-4">Categories</h4>
+                                            {% for i in category %}
+                                            <div class="check p-1">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox p-4"
+                                                    id="category-{{i.id}}" data-filter="category" value="{{i.id}}"
+                                                    style="height: 18px; width: 18px; margin-left: 20px;">
+                                                <span class="" style="font-size: 18px; margin-left: 10px;">
+                                                    <a href="{{i.id}}" class="text-dark text-center"> {{i.name}}
+                                                        ({{i.course_set.all.count}})</a>
+                                                </span><br>
+                                            </div>
+
+                                            {% endfor%}
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-6 col-sm-12">
+                                            <h4 class="mb-2 mt-2">Level</h4>
+                                            {% for i in level %}
+                                            <div class="check p-1">
+                                                <input type="checkbox" class="custom-control-input filter-checkbox"
+                                                    id="level-{{i.id}}" value="{{i.id}}" data-filter="level"
+                                                    style="height: 18px; width: 18px; margin-left: 20px;">
+                                                <span class="" style="font-size: 18px; margin-left: 10px;">
+                                                    <a href="{{i.id}}" class="text-dark text-center"> {{i.name}}
+                                                        ({{i.course_set.all.count}})</a>
+                                                </span><br>
+                                            </div>
+                                            {% endfor%}
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-6 col-sm-12">
+                                            <h4 class="mb-2 mt-2">Price</h4>
+
+                                            <div class="check p-1">
+
+                                                <input type="checkbox" id="price-1" name="customRadio"
+                                                    class="custom-control-input filter-checkbox" value="priceall"
+                                                    data-filter="price"
+                                                    style="height: 18px; width: 18px; margin-left: 20px;">
+                                                <span class="custom-control-label font-size-base" for="price-1"
+                                                    style="font-size: 18px; margin-left: 10px;">All
+                                                    ({{course.all.count}})</span><br>
+
+
+                                                <input type="checkbox" id="price-2" name="customRadio"
+                                                    class="custom-control-input filter-checkbox" value="pricefree"
+                                                    data-filter="price"
+                                                    style="height: 18px; width: 18px; margin-left: 20px;">
+                                                <span class="custom-control-label font-size-base" for="price-2"
+                                                    style="font-size: 18px; margin-left: 10px;">Free
+                                                    ({{Free_Course_count}})</span><br>
+
+                                                <input type="checkbox" id="price-3" name="customRadio"
+                                                    class="custom-control-input filter-checkbox" value="pricepaid"
+                                                    data-filter="price"
+                                                    style="height: 18px; width: 18px; margin-left: 20px;">
+                                                <span class="custom-control-label font-size-base" for="price-3"
+                                                    style="font-size: 18px; margin-left: 10px;">Paid
+                                                    ({{Paid_Course_count}})</span><br>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+
+            <div class="col-lg-3 col-md-12 col-sm-12 wow fadeInUp d-none d-sm-none d-md-none d-lg-block"
+                data-wow-delay="0.1s">
+                <div class="container-xxl">
+                    <h3 class="mb-5">Filter By</h3>
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-lg-12 col-md-6 col-sm-12 p-2">
+                                <h4 class="mb-4">Categories</h4>
+                                {% for i in category %}
+                                <div class="check p-1">
+                                    <input type="checkbox" class="custom-control-input filter-checkbox p-4"
+                                        id="category-{{i.id}}" data-filter="category" value="{{i.id}}"
+                                        style="height: 18px; width: 18px; margin-left: 20px;">
+                                    <span class="" style="font-size: 18px; margin-left: 10px;">
+                                        <a href="" class="text-dark text-center" style="cursor: default;"> {{i.name}}
+                                            ({{i.course_set.all.count}})</a>
+                                    </span><br>
+                                </div>
+
+                                {% endfor%}
+                            </div>
+
+                            <div class="col-lg-12 col-md-6 col-sm-12">
+                                <h4 class="mb-2 mt-2">Level</h4>
+                                {% for i in level %}
+                                <div class="check p-1">
+                                    <input type="checkbox" class="custom-control-input filter-checkbox"
+                                        id="level-{{i.id}}" value="{{i.id}}" data-filter="level"
+                                        style="height: 18px; width: 18px; margin-left: 20px;">
+                                    <span class="" style="font-size: 18px; margin-left: 10px;">
+                                        <a href="" class="text-dark text-center" style="cursor: default;"> {{i.name}}
+                                            ({{i.course_set.all.count}})</a>
+                                    </span><br>
+                                </div>
+                                {% endfor%}
+                            </div>
+
+                            <div class="col-lg-12 col-md-6 col-sm-12">
+                                <h4 class="mb-2 mt-2">Price</h4>
+
+                                <div class="check p-1">
+
+                                    <input type="checkbox" id="price-1" name="customRadio"
+                                        class="custom-control-input filter-checkbox" value="priceall"
+                                        data-filter="price" style="height: 18px; width: 18px; margin-left: 20px;">
+                                    <span class="custom-control-label font-size-base" for="price-1"
+                                        style="font-size: 18px; margin-left: 10px;">All
+                                        ({{course.all.count}})</span><br>
+
+
+                                    <input type="checkbox" id="price-2" name="customRadio"
+                                        class="custom-control-input filter-checkbox" value="pricefree"
+                                        data-filter="price" style="height: 18px; width: 18px; margin-left: 20px;">
+                                    <span class="custom-control-label font-size-base" for="price-2"
+                                        style="font-size: 18px; margin-left: 10px;">Free
+                                        ({{Free_Course_count}})</span><br>
+
+                                    <input type="checkbox" id="price-3" name="customRadio"
+                                        class="custom-control-input filter-checkbox" value="pricepaid"
+                                        data-filter="price" style="height: 18px; width: 18px; margin-left: 20px;">
+                                    <span class="custom-control-label font-size-base" for="price-3"
+                                        style="font-size: 18px; margin-left: 10px;">Paid
+                                        ({{Paid_Course_count}})</span><br>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Start -->
+            <div class="col-lg-9 col-md-12 col-sm-12 wow fadeInUp overflow-auto" data-wow-delay="0.1s">
+
+                <div class="container">
+                    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+
+                        <h3 class="mb-5" style="color: #fb873f;">All Courses</h3>
+                    </div>
+                    <div class="row g-4" id="filteredCourse">
+                        {% for i in course%}
+                        <div class="col-12 col-md-6 col-xl-4 pb-4 pb-md-7" data-aos="fade-up" data-aos-delay="50"
+                            >
+
+                            <div class="card shadow">
+                                <img src="/media/{{i.featured_image}}" class="card-img-top p-2" alt="..."
+                                    style="height: 200px;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="{{i.get_absolute_url}}"
+                                            class="text-dark">{{i.title}}</a></h5>
+                                            
+                                    <div class="d-flex">
+                                        <small class="flex-fill text-center py-1 px-1"><i
+                                                class="fa fa-star text-warning me-1"></i>
+                                            4.55</small>
+                                        <small class="flex-fill text-left py-1 px-1"><i
+                                                class="fa fa-user-graduate me-1"></i>{{i.usercourse_set.all.count}}
+                                            Learners</small>
+                                        <small class="flex-fill text-center py-1 px-1"><i
+                                                class="fa fa-user me-1"></i>{{i.level}}</small>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        {% if i.price == 0 %}
+                                        <small class="py-1 px-1 fw-bold fs-6 text-center">FREE</small>
+                                        {% else %}
+                                        <small class="py-1 px-1 fw-bold fs-6 text-center"><del class="me-2">₹
+                                                {{i.price}}</del> ₹ {% discount_calculation i.price i.discount %}</small>
+                                        {% endif %}
+
+                                        <small class=" text-primary py-1 px-1 fw-bold fs-6" style="float:right;"><a
+                                                href="{{i.get_absolute_url}}">Enroll Now <i
+                                                class="fa fa-chevron-right me-1 fs-10"></i></a></small>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Courses End -->
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

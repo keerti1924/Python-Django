@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Code Editor</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ZS5MZUzEHJpIEl3J9vEX6m8Yo8OwGJc/iIzH8IBQ/6D5F6BR69w9CVdjo6HzrHM" crossorigin="anonymous">
+    <style>
+        #editor {
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Code Editor</h2>
+                <textarea id="editor" class="form-control"></textarea>
+                <button class="btn btn-primary mt-3" onclick="runCode()">Run Code</button>
+            </div>
+            <div class="col-md-6">
+                <h2>Output</h2>
+                <iframe id="output" class="border" width="100%" height="300px"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-mQa7t0oDY5B5xjFxyjfwxgKJwb4WmNAwZ82+11r6TLRe6pt0p2H9Ii+UCkGgiifP"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function runCode() {
+            const editorContent = document.getElementById('editor').value;
+            const outputFrame = document.getElementById('output');
+            const outputDocument = outputFrame.contentDocument || outputFrame.contentWindow.document;
+
+            outputDocument.open();
+            outputDocument.write(editorContent);
+            outputDocument.close();
+        }
+    </script>
+
+</body>
+
+</html>

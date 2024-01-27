@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Add Review{% endblock %}
+{% block content %}
+{% load static %}
+
+<!-- create-review-page  -->
+
+<style>
+    .profile-button a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .profile-button a:hover {
+        color: #fff !important;
+    }
+</style>
+
+<!-- section-2 form-section  -->
+
+{% if user.is_authenticated %}
+<section>
+    <div class="p-5 review">
+        <div class="row py-2">
+            <div class="col-12">
+                <center>
+                    <form method="POST" action="{% url 'add_review' %}" style="width: 600px;" class="shadow p-4">
+                        {% csrf_token %}
+
+                        <h1>Add Your Review</h1>
+
+                        {% include 'components/message.html' %}
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" name="name" placeholder="Your Name"
+                                        value="{{user.profile.first_name}} {{user.profile.last_name}}">
+                                    <label for="name">Your Name</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a review here" name="review"
+                                        style="height: 150px"></textarea>
+                                    <label for="review">Your Review</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </center>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endif %}
+
+{% endblock %}

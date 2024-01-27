@@ -1,0 +1,351 @@
+{% extends 'base.html' %}
+{% block title %}Privacy Policy{% endblock %}
+{% load static %}
+{% block content %}
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 text-white animated slideInDown">Frequently Asked Questions (FAQ)</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a class="text-white" href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">FAQ & Help</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+<div class="container">
+    <h2 class="mb-5 p-2 text-center"> Frequently Asked Questions (FAQ)</h2>
+
+    <div class="faq">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h5>
+                            What is Secret Coder?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Secret Coder is an innovative e-learning platform designed to teach coding and programming
+                        skills to learners of all levels. Our platform offers a variety of courses, interactive coding
+                        challenges, and resources to help you master the art of coding.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5>
+                            How do I get started?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Getting started is easy! Simply sign up for a Secret Coder account, choose a course that suits
+                        your level, and start learning. You can also explore our free resources and coding challenges to
+                        enhance your skills.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <h5>
+                            Are the courses suitable for beginners?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Absolutely! Secret Coder provides courses tailored for beginners, intermediate, and advanced
+                        learners. Our comprehensive curriculum ensures that individuals with varying levels of coding
+                        experience can find suitable courses.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <h5>
+                            What programming languages are covered?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Secret Coder covers a wide range of programming languages, including but not limited to:
+                        <ul>
+                            <li>Python</li>
+                            <li>JavaScript</li>
+                            <li>Java</li>
+                            <li>HTML/CSS</li>
+                            <li>C++</li>
+                            <li>SQL</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        <h5>
+                            Can I access courses on multiple devices?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Yes, you can access Secret Coder courses on multiple devices, including computers, tablets, and
+                        smartphones. Our platform is designed to provide a seamless learning experience across various
+                        devices.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        <h5>
+                            How does the interactive coding feature work?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Our interactive coding feature allows you to practice coding directly on our platform. You can
+                        write, run, and test your code in real-time. The system provides instant feedback, helping you
+                        understand and correct errors.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        <h5>
+                            Is there a community or forum for learners to connect?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Yes, Secret Coder has a vibrant community where learners can connect, ask questions, and share
+                        insights. Join our forums to engage with fellow learners, seek advice, and participate in coding
+                        discussions.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingEight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        <h5>
+                            How can I track my progress?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Your progress is automatically tracked as you complete lessons and coding challenges. You can
+                        view your achievements, completed courses, and overall progress in your user dashboard.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                        <h5>
+                            Are there any free resources available?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Yes, Secret Coder offers free resources, including introductory courses, coding challenges, and
+                        coding tips. Explore our free content to get a taste of what our platform has to offer.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingTen">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                        <h5>
+                            How can I contact customer support?
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        If you have any questions or need assistance, you can reach our customer support team at <a
+                            href="mailto:secretcoder@gmail.com"> secretcoder@gmail.com</a> . We're here to help you on
+                        your coding journey!
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <h2 class="mb-5 p-2 text-center">Help Center</h2>
+    <div class="help">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h5>
+                            Account and Registration
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6 class="mb-2">How do I create a Secret Coder account?</h6>
+                        <p class="mb-4">To create an account, click on the "Sign Up" button on the homepage and follow
+                            the registration process.</p>
+                        <h6 class="mb-2">I forgot my password. How can I reset it?</h6>
+                        <p class="mb-4">Click on the "Forgot Password" link on the login page. You will receive
+                            instructions on resetting your password via the email associated with your account.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5>
+                            Courses and Learning
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6 class="mb-2">How do I enroll in a course?</h6>
+                        <p class="mb-4">Navigate to the "Courses" section, choose a course, and click on the "Enroll"
+                            button. Follow the prompts to start the course</p>
+                        <h6 class="mb-2">Can I switch between courses?</h6>
+                        <p class="mb-4">Yes, you can switch between courses at any time. Your progress in each course
+                            will be saved.</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <h5>
+                            Technical Support
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6 class="mb-2">I'm experiencing technical issues with the interactive coding feature. What
+                            should I do?</h6>
+                        <p class="mb-4">Clear your browser cache, update your browser to the latest version, and ensure
+                            that JavaScript is enabled. If issues persist, contact our technical support team.</p>
+                        <h6 class="mb-2">The videos are not playing. How can I fix this?</h6>
+                        <p class="mb-4">Make sure your internet connection is stable. If the issue persists, try
+                            accessing the content in a different browser or device. Contact support if the problem
+                            continues.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <h5>
+                            Community and Forums
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6 class="mb-2">How can I join the Secret Coder community?</h6>
+                        <p class="mb-4">Click on the "Community" link in the navigation menu to access our forums.
+                            Create an account if you haven't already, and start engaging with the community.</p>
+                        <h6 class="mb-2">Can I ask questions in the forums</h6>
+                        <p class="mb-4">Absolutely! Feel free to ask questions, share insights, and participate in
+                            coding discussions within our community forums.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        <h5>
+                            Billing and Payments
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6 class="mb-2">Is my payment information secure?</h6>
+                        <p class="mb-4">Yes, Secret Coder employs industry-standard encryption to ensure the security of
+                            your payment information. Your data is handled with the utmost care.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item p-2 mb-4 border">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        <h5>
+                            Contact Us
+                        </h5>
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        For any additional questions or assistance, please contact our customer support team at <a
+                            href="mailto:secretcoder@gmail.com"> secretcoder@gmail.com</a>. We're here to support you on
+                        your coding journey!
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Payment Success{% endblock %}
+{% load static %}
+{% load course_tags %}
+
+{% block content %}
+
+
+<!-- Success-payemnt-page Start -->
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 text-center">
+
+                <i class="bi bi-check-circle-fill display-1 text-success"></i>
+
+                <h1 class="mb-2">Order Received</h1>
+                <p class="mb-4">Thank you. Your order has been received.</p>
+
+            </div>
+        </div>
+        <center>
+            <table class="table border" style="max-width: 700px;">
+
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <td>{{payment.order_id}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Date</th>
+                    <td>{{payment.date}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Total</th>
+                    <td>₹ {{payment.course.price}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Payment Method</th>
+                    <td>Online</td>
+                </tr>
+
+            </table>
+            <table class="table border" style="max-width: 700px;">
+
+                <tr>
+                    <th scope="col" colspan="2">
+                        <h4>Order Details</h4>
+                    </th>
+
+                </tr>
+                <tr>
+                    <th scope="row">Product</th>
+                    <th scope="row">Total</th>
+                </tr>
+                <tr>
+                    <td>{{payment.course}}</td>
+                    <td>₹ {{payment.course.price}}</td>
+                </tr>
+                <tr>
+                    <td>Discount</td>
+                    <td>{{payment.course.discount}} %</td>
+                </tr>
+
+            </table>
+            <table class="table border" style="max-width: 700px;">
+                <tr>
+                    <th>Subtotal</th>
+                    <th>Payment Method</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <td>₹ {% discount_calculation payment.course.price payment.course.discount %}</td>
+                    <td>Online Payment</td>
+                    <td>₹ {% discount_calculation payment.course.price payment.course.discount %}</td>
+                </tr>
+            </table>
+
+            <a class="btn py-2 px-4 text-white mt-3" href="{% url 'home' %}">Go to Home</a>
+
+        </center>
+
+
+
+
+
+    </div>
+</div>
+<!-- Success-payemnt-page End -->
+
+{% endblock %}
