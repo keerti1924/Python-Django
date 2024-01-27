@@ -28,7 +28,7 @@ def Home(request):
         'course': course,
     }
 
-    return render(request, 'main/index.html', context)
+    return render(request, 'index.html', context)
 
 
 def About(request):
