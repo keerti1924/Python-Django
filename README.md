@@ -38,7 +38,7 @@ Make sure you have the following installed:
 
 ### 🛠 Installation
 
-- Clone the repository
+#### Clone the repository
 ````
 git clone https://github.com/keerti1924/Python-Django.git 
 ````
